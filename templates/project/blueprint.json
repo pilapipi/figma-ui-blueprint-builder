@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0",
+  "project": {
+    "id": "{{PROJECT_ID}}",
+    "name": "{{PROJECT_NAME}}",
+    "outputPage": "{{PROJECT_NAME}} · Output",
+    "buildMode": "replace-generated",
+    "source": {
+      "kind": "screenshots",
+      "notes": "Complete the source inventory before generating."
+    }
+  },
+  "tokens": {
+    "colors": {
+      "ink": "#171A21",
+      "background": "#F6F7F9",
+      "surface": "#FFFFFF",
+      "accent": "#5B5CE2",
+      "on-accent": "#FFFFFF"
+    },
+    "spacing": {
+      "sm": 12,
+      "md": 16,
+      "lg": 24
+    },
+    "radii": {
+      "control": 12,
+      "pill": 999
+    },
+    "typography": {
+      "title": {
+        "family": "Inter",
+        "style": "Bold",
+        "size": 28,
+        "lineHeight": 34
+      },
+      "body": {
+        "family": "Inter",
+        "style": "Regular",
+        "size": 16,
+        "lineHeight": 24
+      },
+      "label": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "size": 14,
+        "lineHeight": 18
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "primary-button",
+      "name": "Controls/Primary Button",
+      "width": 326,
+      "height": 52,
+      "fill": "accent",
+      "radius": "pill",
+      "layout": {
+        "mode": "horizontal",
+        "align": "center",
+        "justify": "center"
+      },
+      "layers": [
+        {
+          "id": "label",
+          "name": "Label",
+          "type": "text",
+          "text": "Continue",
+          "textStyle": "label",
+          "color": "on-accent"
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "main-flow",
+      "name": "Main Flow",
+      "description": "Replace this starter screen with the analyzed source states.",
+      "screens": [
+        {
+          "id": "start",
+          "name": "Start",
+          "width": 390,
+          "height": 844,
+          "fill": "background",
+          "layers": [
+            {
+              "id": "title",
+              "type": "text",
+              "text": "{{PROJECT_NAME}}",
+              "x": 32,
+              "y": 96,
+              "width": 326,
+              "textStyle": "title",
+              "color": "ink"
+            },
+            {
+              "id": "button",
+              "type": "instance",
+              "componentId": "primary-button",
+              "x": 32,
+              "y": 748,
+              "overrides": {
+                "Label": "Continue"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

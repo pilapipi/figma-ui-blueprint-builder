@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "1.0",
+  "project": {
+    "id": "memory-music",
+    "name": "Memory Music",
+    "outputPage": "UI Blueprint Output",
+    "buildMode": "replace-generated",
+    "source": {
+      "kind": "screenshots",
+      "notes": "Generic example demonstrating component reuse across two states."
+    }
+  },
+  "tokens": {
+    "colors": {
+      "ink": "#1F2430",
+      "paper": "#F7F4EE",
+      "accent": "#6255D9",
+      "white": "#FFFFFF",
+      "lavender": "#EAE7FF"
+    },
+    "spacing": {
+      "xs": 8,
+      "md": 16
+    },
+    "radii": {
+      "card": 20,
+      "pill": 999
+    },
+    "typography": {
+      "display": {
+        "family": "Inter",
+        "style": "Bold",
+        "size": 30,
+        "lineHeight": 36
+      },
+      "body": {
+        "family": "Inter",
+        "style": "Regular",
+        "size": 16,
+        "lineHeight": 24
+      },
+      "label": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "size": 14,
+        "lineHeight": 18
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "primary-button",
+      "name": "Controls/Primary Button",
+      "width": 326,
+      "height": 52,
+      "fill": "accent",
+      "radius": "pill",
+      "layout": {
+        "mode": "horizontal",
+        "align": "center",
+        "justify": "center"
+      },
+      "layers": [
+        {
+          "id": "label",
+          "name": "Label",
+          "type": "text",
+          "text": "Continue",
+          "textStyle": "label",
+          "color": "white"
+        }
+      ]
+    },
+    {
+      "id": "memory-card",
+      "name": "Content/Memory Card",
+      "width": 326,
+      "height": 132,
+      "fill": "white",
+      "radius": "card",
+      "layout": {
+        "mode": "vertical",
+        "gap": "xs",
+        "padding": "md"
+      },
+      "shadow": {
+        "y": 8,
+        "blur": 24,
+        "color": "ink",
+        "opacity": 0.1
+      },
+      "layers": [
+        {
+          "id": "eyebrow",
+          "name": "Eyebrow",
+          "type": "text",
+          "text": "MEMORY",
+          "fontSize": 11,
+          "fontStyle": "Semi Bold",
+          "color": "accent"
+        },
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "text",
+          "text": "A quiet summer afternoon",
+          "textStyle": "body",
+          "color": "ink",
+          "width": 294
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "creation-flow",
+      "name": "Creation Flow",
+      "description": "Two states assembled from the same reusable components.",
+      "layout": {
+        "columns": 2,
+        "gap": 72
+      },
+      "screens": [
+        {
+          "id": "create-empty",
+          "name": "Create · Empty",
+          "width": 390,
+          "height": 844,
+          "fill": "paper",
+          "layers": [
+            {
+              "id": "headline",
+              "type": "text",
+              "text": "What memory should become a song?",
+              "x": 32,
+              "y": 108,
+              "width": 326,
+              "textStyle": "display",
+              "color": "ink"
+            },
+            {
+              "id": "card",
+              "type": "instance",
+              "componentId": "memory-card",
+              "x": 32,
+              "y": 250,
+              "overrides": {
+                "Eyebrow": "START HERE",
+                "Title": "Describe a person, place, or moment."
+              }
+            },
+            {
+              "id": "button",
+              "type": "instance",
+              "componentId": "primary-button",
+              "x": 32,
+              "y": 748,
+              "overrides": {
+                "Label": "Create a song"
+              }
+            }
+          ]
+        },
+        {
+          "id": "create-filled",
+          "name": "Create · Filled",
+          "width": 390,
+          "height": 844,
+          "fill": "lavender",
+          "layers": [
+            {
+              "id": "headline",
+              "type": "text",
+              "text": "Your story is ready",
+              "x": 32,
+              "y": 90,
+              "width": 326,
+              "textStyle": "display",
+              "color": "ink"
+            },
+            {
+              "id": "card",
+              "type": "instance",
+              "componentId": "memory-card",
+              "x": 32,
+              "y": 200,
+              "overrides": {
+                "Eyebrow": "SAVED MEMORY",
+                "Title": "The train ride home after our first concert."
+              }
+            },
+            {
+              "id": "button",
+              "type": "instance",
+              "componentId": "primary-button",
+              "x": 32,
+              "y": 748,
+              "overrides": {
+                "Label": "Choose a music style"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
