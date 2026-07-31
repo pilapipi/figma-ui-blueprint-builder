@@ -1,0 +1,24 @@
+# Node
+*.log
+*.log.*
+node_modules
+
+.DS_Store
+.idea/
+.vscode/
+
+out/
+dist/
+code.js
+coverage/
+
+# Local environment and source design files
+.env
+.env.*
+!.env.example
+*.fig
+*.fig~
+
+# Local client/source assets are private by default
+projects/*/assets/*
+!projects/*/assets/.gitkeep

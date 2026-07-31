@@ -1,0 +1,86 @@
+name: Bug report
+description: Report a reproducible runtime, Blueprint, or Figma output problem.
+title: "[Bug]: "
+labels:
+  - bug
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug. Remove client data, private Figma URLs,
+        credentials, and confidential screenshots before submitting.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect?
+      placeholder: A concise description of the problem.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide exact steps and a minimal non-confidential Blueprint.
+      placeholder: |
+        1. Run ...
+        2. Import ...
+        3. Click ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v2.0.0 or commit SHA
+    validations:
+      required: true
+
+  - type: dropdown
+    id: source
+    attributes:
+      label: Source material
+      options:
+        - Figma document
+        - Copied .fig file
+        - Screenshots or PDF
+        - Mixed source
+        - Not applicable
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include Figma Desktop, operating system, Node.js, and npm versions.
+      placeholder: |
+        Figma Desktop:
+        OS:
+        Node.js:
+        npm:
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Remove confidential and personal information.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched existing Issues and Discussions.
+          required: true
+        - label: I removed private URLs, credentials, personal data, and client assets.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true

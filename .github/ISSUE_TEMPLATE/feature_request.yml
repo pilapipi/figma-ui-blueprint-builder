@@ -1,0 +1,54 @@
+name: Feature request
+description: Propose a reusable Blueprint or runtime capability.
+title: "[Feature]: "
+labels:
+  - enhancement
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Features must be reusable across products. Customer-specific flows,
+        brand content, and fixed screen counts belong in project Blueprints.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What generic use case cannot be expressed today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed capability
+      description: Describe the Schema and rendering behavior you propose.
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Cross-product examples
+      description: Show at least two product contexts that would benefit.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Can the existing Layer DSL or component composition solve it?
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: The request is not tied to a single customer or brand.
+          required: true
+        - label: I searched existing Issues and Discussions.
+          required: true

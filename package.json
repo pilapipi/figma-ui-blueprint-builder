@@ -1,0 +1,48 @@
+{
+  "name": "figma-ui-blueprint-builder",
+  "version": "2.0.0",
+  "description": "Generic local Figma plugin and workflow for turning design documents or screenshots into reusable components and editable screens.",
+  "main": "code.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint code.ts && npm run lint:tools",
+    "lint:fix": "eslint code.ts --fix",
+    "lint:tools": "node --check tools/new-project.mjs && node --check tools/validate-blueprint.mjs",
+    "watch": "npm run build -- --watch",
+    "validate": "node tools/validate-blueprint.mjs",
+    "new:project": "node tools/new-project.mjs",
+    "test": "npm run validate -- examples/memory-music/blueprint.json",
+    "check": "npm run lint && npm test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pilapipi/figma-ui-blueprint-builder.git"
+  },
+  "homepage": "https://github.com/pilapipi/figma-ui-blueprint-builder#readme",
+  "bugs": {
+    "url": "https://github.com/pilapipi/figma-ui-blueprint-builder/issues"
+  },
+  "keywords": [
+    "figma",
+    "figma-plugin",
+    "design-system",
+    "ui-generator",
+    "blueprint",
+    "screenshot-to-figma"
+  ],
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
+  "author": "广州派拉披披科技有限公司 (pilapp)",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@figma/eslint-plugin-figma-plugins": "*",
+    "@figma/plugin-typings": "*",
+    "ajv": "^8.17.1",
+    "eslint": "^10.8.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1"
+  }
+}

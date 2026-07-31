@@ -1,0 +1,643 @@
+<!doctype html>
+<!--
+  Copyright 2026 广州派拉披披科技有限公司 (pilapp)
+  SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UI Blueprint Builder</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f6f8;
+      --panel: #ffffff;
+      --ink: #16181d;
+      --muted: #6d7480;
+      --line: rgba(22, 24, 29, .12);
+      --accent: #5b5ce2;
+      --accent-hover: #4849c8;
+      --accent-soft: #ececff;
+      --success: #27845c;
+      --danger: #c34848;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--ink);
+      font: 13px/1.45 Inter, system-ui, sans-serif;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: linear-gradient(145deg, #7071f0, #4243bb);
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(75, 76, 201, .24);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: -.3px;
+    }
+
+    .subtitle {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      margin-bottom: 16px;
+    }
+
+    .step {
+      padding: 7px 4px;
+      border-radius: 9px;
+      background: var(--accent-soft);
+      color: #4c4dbe;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 650;
+    }
+
+    .card {
+      margin-bottom: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      outline: none;
+      background: var(--bg);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    input { height: 36px; padding: 0 10px; }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(91, 92, 226, .6);
+      box-shadow: 0 0 0 3px rgba(91, 92, 226, .1);
+    }
+
+    textarea {
+      min-height: 164px;
+      resize: vertical;
+      padding: 10px;
+      font: 10.5px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
+      white-space: pre;
+    }
+
+    #inspection { min-height: 92px; margin-top: 9px; }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    button {
+      min-height: 36px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--panel);
+      color: var(--ink);
+      font: 650 12px/1 Inter, system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    button:hover { border-color: rgba(91, 92, 226, .5); }
+    button:disabled { cursor: wait; opacity: .5; }
+    button.primary {
+      flex: 1;
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+    }
+    button.primary:hover { background: var(--accent-hover); }
+    button.ghost { background: transparent; }
+
+    .file-button {
+      display: grid;
+      place-items: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px dashed rgba(91, 92, 226, .45);
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: #4c4dbe;
+      cursor: pointer;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .file-button input { display: none; }
+
+    .progress {
+      overflow: hidden;
+      height: 6px;
+      margin-top: 14px;
+      border-radius: 99px;
+      background: #e5e7eb;
+    }
+
+    .progress > i {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #7778f1, #4142b7);
+      transition: width .25s ease;
+    }
+
+    #status {
+      min-height: 34px;
+      margin: 9px 0 0;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+
+    #status.success { color: var(--success); }
+    #status.error { color: var(--danger); }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="mark">UI</div>
+    <div>
+      <h1>UI Blueprint Builder</h1>
+      <div class="subtitle">从截图与设计文档到可编辑组件和页面</div>
+    </div>
+  </header>
+
+  <div class="steps">
+    <span class="step">1 · 来源</span>
+    <span class="step">2 · 拆解</span>
+    <span class="step">3 · 定制</span>
+    <span class="step">4 · Blueprint</span>
+    <span class="step">5 · 输出</span>
+  </div>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>来源材料</h2>
+      <span class="hint">可选：将本地截图放进当前文件</span>
+    </div>
+    <div class="row">
+      <label>
+        项目 ID
+        <input id="reference-project-id" value="example-project">
+      </label>
+      <label>
+        项目名称
+        <input id="reference-project-name" value="Example Project">
+      </label>
+    </div>
+    <div class="actions">
+      <label class="file-button" style="flex:1">
+        <span id="reference-label">选择 PNG / JPG 参考图</span>
+        <input id="reference-files" type="file" accept="image/*" multiple>
+      </label>
+      <button id="place-references">放入画布</button>
+      <button id="inspect-selection">扫描选区</button>
+    </div>
+    <textarea
+      id="inspection"
+      readonly
+      placeholder="选中源 Frame、图片或 Section 后点击“扫描选区”，结构报告会显示在这里。"
+    ></textarea>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>Blueprint JSON</h2>
+      <span class="hint">定义 Tokens、组件、页面组和图层</span>
+    </div>
+    <label class="file-button">
+      <span id="blueprint-file-label">导入 blueprint.json</span>
+      <input id="blueprint-file" type="file" accept=".json,application/json">
+    </label>
+    <textarea id="blueprint"></textarea>
+    <div class="actions">
+      <button id="load-example">加载示例</button>
+      <button id="validate">验证</button>
+      <button id="build" class="primary">生成组件与页面</button>
+    </div>
+  </section>
+
+  <div class="progress"><i id="bar"></i></div>
+  <p id="status">准备就绪。先导入或编辑 Blueprint，再执行验证和生成。</p>
+
+  <footer>
+    <span>Runtime v2.0.0 · Local only · No network</span>
+    <button id="close" class="ghost">关闭</button>
+  </footer>
+
+  <script>
+    const exampleBlueprint = {
+      schemaVersion: "1.0",
+      project: {
+        id: "memory-music",
+        name: "Memory Music",
+        outputPage: "UI Blueprint Output",
+        buildMode: "replace-generated",
+        source: {
+          kind: "screenshots",
+          notes: "Generic two-screen example; replace with your own analysis."
+        }
+      },
+      tokens: {
+        colors: {
+          ink: "#1F2430",
+          paper: "#F7F4EE",
+          accent: "#6255D9",
+          white: "#FFFFFF",
+          muted: "#6F7581",
+          lavender: "#EAE7FF"
+        },
+        spacing: {
+          xs: 8,
+          sm: 12,
+          md: 16,
+          lg: 24,
+          xl: 32
+        },
+        radii: {
+          card: 20,
+          control: 14,
+          pill: 999
+        },
+        typography: {
+          display: {
+            family: "Inter",
+            style: "Bold",
+            size: 30,
+            lineHeight: 36
+          },
+          body: {
+            family: "Inter",
+            style: "Regular",
+            size: 16,
+            lineHeight: 24
+          },
+          label: {
+            family: "Inter",
+            style: "Semi Bold",
+            size: 14,
+            lineHeight: 18
+          }
+        }
+      },
+      components: [
+        {
+          id: "primary-button",
+          name: "Controls/Primary Button",
+          width: 326,
+          height: 52,
+          fill: "accent",
+          radius: "pill",
+          layout: {
+            mode: "horizontal",
+            align: "center",
+            justify: "center"
+          },
+          layers: [
+            {
+              id: "label",
+              name: "Label",
+              type: "text",
+              text: "Continue",
+              textStyle: "label",
+              color: "white"
+            }
+          ]
+        },
+        {
+          id: "memory-card",
+          name: "Content/Memory Card",
+          width: 326,
+          height: 132,
+          fill: "white",
+          radius: "card",
+          layout: {
+            mode: "vertical",
+            gap: "xs",
+            padding: "md"
+          },
+          shadow: {
+            y: 8,
+            blur: 24,
+            color: "ink",
+            opacity: 0.1
+          },
+          layers: [
+            {
+              id: "eyebrow",
+              name: "Eyebrow",
+              type: "text",
+              text: "MEMORY",
+              fontSize: 11,
+              fontStyle: "Semi Bold",
+              color: "accent"
+            },
+            {
+              id: "title",
+              name: "Title",
+              type: "text",
+              text: "A quiet summer afternoon",
+              textStyle: "body",
+              color: "ink",
+              width: 294
+            }
+          ]
+        }
+      ],
+      sections: [
+        {
+          id: "creation-flow",
+          name: "Creation Flow",
+          description: "Example states assembled from reusable components.",
+          layout: {
+            columns: 2,
+            gap: 72
+          },
+          screens: [
+            {
+              id: "create-empty",
+              name: "Create · Empty",
+              width: 390,
+              height: 844,
+              fill: "paper",
+              layers: [
+                {
+                  id: "kicker",
+                  type: "text",
+                  text: "TURN A MOMENT INTO MUSIC",
+                  x: 32,
+                  y: 72,
+                  width: 326,
+                  fontSize: 11,
+                  fontStyle: "Semi Bold",
+                  color: "accent"
+                },
+                {
+                  id: "headline",
+                  type: "text",
+                  text: "What memory should become a song?",
+                  x: 32,
+                  y: 108,
+                  width: 326,
+                  textStyle: "display",
+                  color: "ink"
+                },
+                {
+                  id: "card",
+                  type: "instance",
+                  componentId: "memory-card",
+                  x: 32,
+                  y: 250,
+                  overrides: {
+                    Eyebrow: "START HERE",
+                    Title: "Describe a person, place, or moment."
+                  }
+                },
+                {
+                  id: "button",
+                  type: "instance",
+                  componentId: "primary-button",
+                  x: 32,
+                  y: 748,
+                  overrides: {
+                    Label: "Create a song"
+                  }
+                }
+              ]
+            },
+            {
+              id: "create-filled",
+              name: "Create · Filled",
+              width: 390,
+              height: 844,
+              fill: "lavender",
+              layers: [
+                {
+                  id: "headline",
+                  type: "text",
+                  text: "Your story is ready",
+                  x: 32,
+                  y: 90,
+                  width: 326,
+                  textStyle: "display",
+                  color: "ink"
+                },
+                {
+                  id: "card",
+                  type: "instance",
+                  componentId: "memory-card",
+                  x: 32,
+                  y: 200,
+                  overrides: {
+                    Eyebrow: "SAVED MEMORY",
+                    Title: "The train ride home after our first concert."
+                  }
+                },
+                {
+                  id: "button",
+                  type: "instance",
+                  componentId: "primary-button",
+                  x: 32,
+                  y: 748,
+                  overrides: {
+                    Label: "Choose a music style"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    const blueprint = document.getElementById("blueprint");
+    const status = document.getElementById("status");
+    const bar = document.getElementById("bar");
+    const interactive = [...document.querySelectorAll("button, input")];
+
+    function loadExample() {
+      blueprint.value = JSON.stringify(exampleBlueprint, null, 2);
+    }
+
+    function setBusy(busy) {
+      interactive.forEach((element) => element.disabled = busy);
+    }
+
+    function post(type, payload = {}) {
+      setBusy(true);
+      status.className = "";
+      status.textContent = "正在处理…";
+      bar.style.width = "3%";
+      parent.postMessage({
+        pluginMessage: { type, ...payload }
+      }, "*");
+    }
+
+    loadExample();
+
+    document.getElementById("load-example").addEventListener("click", () => {
+      loadExample();
+      status.textContent = "已载入通用两页示例。";
+    });
+
+    document.getElementById("validate").addEventListener("click", () => {
+      post("validate", { json: blueprint.value });
+    });
+
+    document.getElementById("build").addEventListener("click", () => {
+      post("build", { json: blueprint.value });
+    });
+
+    document.getElementById("inspect-selection").addEventListener("click", () => {
+      post("inspect-selection");
+    });
+
+    document.getElementById("blueprint-file").addEventListener("change", async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      blueprint.value = await file.text();
+      document.getElementById("blueprint-file-label").textContent = file.name;
+      status.textContent = `已载入 ${file.name}，建议先验证。`;
+    });
+
+    document.getElementById("reference-files").addEventListener("change", (event) => {
+      const count = event.target.files?.length || 0;
+      document.getElementById("reference-label").textContent =
+        count > 0 ? `已选择 ${count} 张参考图` : "选择 PNG / JPG 参考图";
+    });
+
+    document.getElementById("place-references").addEventListener("click", async () => {
+      const files = [...document.getElementById("reference-files").files];
+      if (files.length === 0) {
+        status.className = "error";
+        status.textContent = "请先选择至少一张参考图。";
+        return;
+      }
+      setBusy(true);
+      const projectId = document.getElementById("reference-project-id").value.trim()
+        || "reference-project";
+      const projectName = document.getElementById("reference-project-name").value.trim()
+        || "Reference Project";
+      for (let index = 0; index < files.length; index += 1) {
+        const file = files[index];
+        const bytes = await file.arrayBuffer();
+        parent.postMessage({
+          pluginMessage: {
+            type: "place-reference",
+            projectId,
+            projectName,
+            fileName: file.name,
+            bytes,
+            index: index + 1,
+            total: files.length
+          }
+        }, "*", [bytes]);
+      }
+    });
+
+    document.getElementById("close").addEventListener("click", () => {
+      parent.postMessage({ pluginMessage: { type: "close" } }, "*");
+    });
+
+    window.onmessage = (event) => {
+      const message = event.data.pluginMessage;
+      if (!message) return;
+      if (message.type === "inspection") {
+        document.getElementById("inspection").value = message.report;
+        return;
+      }
+      if (message.type !== "status") return;
+      status.textContent = message.message;
+      status.className = message.kind || "";
+      bar.style.width = `${Math.max(0, Math.min(100, message.progress || 0))}%`;
+      if (
+        message.kind === "error"
+        || (message.kind === "success" && message.progress === 100)
+      ) {
+        setBusy(false);
+      }
+    };
+  </script>
+</body>
+</html>
