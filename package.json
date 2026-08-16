@@ -41,7 +41,7 @@
     "@figma/eslint-plugin-figma-plugins": "*",
     "@figma/plugin-typings": "*",
     "ajv": "^8.17.1",
-    "eslint": "^10.8.0",
+    "eslint": "^10.8.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.1"
   }
